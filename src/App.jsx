@@ -1,5 +1,5 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { countAtom } from "./store/atoms/count";
+import { useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { countAtom, evenSelector } from "./store/atoms/count";
 
 function App() {
   return (
@@ -19,9 +19,17 @@ function Count() {
 
 function CountRendrer() {
   const count = useRecoilValue(countAtom);
+
+  // Also can be like this
+  // const count = useRecoilValueLoadable(countAtom);
+  // now count is an object which has "State", which can be loading, hasValue and hasError and "Content" which has actual content only if "hasValue".
+
+  const isEven = useRecoilValue(evenSelector)
+
   return (
     <div>
       <b>{count}</b>
+      {isEven % 2 == 0 && " it is even"}
       <Buttons />
     </div>
   );
